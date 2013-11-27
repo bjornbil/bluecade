@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">BlueCade</string>
+    <string name="action_settings">Settings</string>
+    <string name="welcome">Welcome to BlueCade</string>
+    <string name="welcomeinfo">A brand new bluetooth game platform</string>
+    <string name="opengame">Launch game</string>
+    <string name="gameimage">Game image</string>
+    <string name="backarrow">Back</string>
+    <string name="forarrow">Forward</string>
+    <string name="swipe">Swipe to switch game</string>
+    <string name="rps">Rock, Paper, Scissors</string>
+    <string name="pic">Pictionary</string>
+
+</resources>
