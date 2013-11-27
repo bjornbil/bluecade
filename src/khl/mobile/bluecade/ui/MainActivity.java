@@ -8,11 +8,15 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 public class MainActivity extends FragmentActivity {
 
@@ -27,6 +31,7 @@ public class MainActivity extends FragmentActivity {
 		pager.setAdapter(pagerAdapter);
 		pager.setCurrentItem(0);
 
+
 	}
 
 	@Override
@@ -35,7 +40,8 @@ public class MainActivity extends FragmentActivity {
 		getMenuInflater().inflate(R.menu.blue_cade, menu);
 		return true;
 	}
-
+	
+	
 	@Override
 	public void onBackPressed() {
 	    new AlertDialog.Builder(this)

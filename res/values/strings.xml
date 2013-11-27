@@ -12,5 +12,10 @@
     <string name="swipe">Swipe to switch game</string>
     <string name="rps">Rock, Paper, Scissors</string>
     <string name="pic">Pictionary</string>
+    <string name="startbutton">Start game</string>
+    <string name="connectbutton">Connect</string>
+    <string name="instructions">Instructions</string>
+    <string name="highscores">Highscores</string>
+    <string name="connected">Connected to :</string>
 
 </resources>

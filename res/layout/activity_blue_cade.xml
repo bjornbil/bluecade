@@ -27,21 +27,12 @@
         android:contentDescription="@string/forarrow"
         android:src="@drawable/forarrow" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:text="@string/opengame" />
-
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="250dp"
         android:layout_height="100dp"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_alignRight="@+id/button1"
+        android:layout_alignLeft="@+id/buttonpic"
+        android:layout_alignRight="@+id/buttonpic"
         android:src="@drawable/bluecadepng" />
 
     <TextView
@@ -64,5 +55,13 @@
         android:layout_marginTop="14dp"
         android:contentDescription="@string/rps"
         android:src="@drawable/rps" />
+
+    <Button
+        android:id="@+id/buttonrps"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="30dp"
+        android:text="@string/opengame" />
 
 </RelativeLayout>
