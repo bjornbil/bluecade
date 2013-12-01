@@ -4,6 +4,8 @@ import khl.mobile.bluecade.R;
 import khl.mobile.bluecade.R.layout;
 import khl.mobile.bluecade.R.menu;
 import khl.mobile.bluecade.controller.FragmentPager;
+import khl.mobile.bluecade.model.GameHandler;
+import khl.mobile.bluecade.model.GameInfo;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,14 +22,29 @@ import android.widget.Button;
 
 public class MainActivity extends FragmentActivity {
 
+	// TODO: make initialiseActivity (or alternative) that creates the game and
+	// bluetooth handlers so it can pass them to the next Activity
+	
+	GameHandler gameHandler;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		gameHandler = new GameHandler();
+		
 		setContentView(R.layout.activity_main);
 		ViewPager pager = (ViewPager) findViewById(R.id.pager);
 		FragmentManager fm = getSupportFragmentManager();
 		FragmentPager pagerAdapter = new FragmentPager(fm);
-		// Here you would declare which page to visit on creation
+		
+		for(GameInfo i : gameHandler.getGamesInfo()){
+			FragmentTemplate f = new FragmentTemplate();
+			f.setTitle(i.getTitle());
+			f.setImage(i.getImageResourceId());
+			pagerAdapter.addItem(f);
+		}
+		
 		pager.setAdapter(pagerAdapter);
 		pager.setCurrentItem(0);
 
