@@ -15,16 +15,6 @@
         android:src="@drawable/bluecadepng"
         android:contentDescription="BlueCade Logo"/>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/swipe"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
@@ -37,7 +27,8 @@
 	        android:src="@drawable/back"
 	        android:scaleType="centerInside"
 	        android:layout_gravity="center"
-            android:layout_weight="0" />
+            android:layout_weight="0"
+            android:onClick="onPreviousButtonClicked" />
 	
 	    <android.support.v4.view.ViewPager
 	        xmlns:android="http://schemas.android.com/apk/res/android"
@@ -57,7 +48,8 @@
 	        android:src="@drawable/forarrow"
 	        android:scaleType="centerInside"
 	        android:layout_gravity="center"
-            android:layout_weight="0" />
+            android:layout_weight="0" 
+            android:onClick="onNextButtonClicked" />
 	        </LinearLayout>
 
     <RelativeLayout
@@ -68,7 +60,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="@string/opengame" />
+        android:text="@string/opengame"
+        android:onClick="onConfirmButtonClicked" />
     
     </RelativeLayout>
 </LinearLayout>

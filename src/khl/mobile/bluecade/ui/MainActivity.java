@@ -1,24 +1,16 @@
 package khl.mobile.bluecade.ui;
 
 import khl.mobile.bluecade.R;
-import khl.mobile.bluecade.R.layout;
-import khl.mobile.bluecade.R.menu;
 import khl.mobile.bluecade.controller.FragmentPager;
 import khl.mobile.bluecade.model.GameHandler;
 import khl.mobile.bluecade.model.GameInfo;
-import android.os.Bundle;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.v4.app.Fragment;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 
 public class MainActivity extends FragmentActivity {
 
@@ -26,6 +18,7 @@ public class MainActivity extends FragmentActivity {
 	// bluetooth handlers so it can pass them to the next Activity
 	
 	GameHandler gameHandler;
+	ViewPager pager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +27,7 @@ public class MainActivity extends FragmentActivity {
 		gameHandler = new GameHandler();
 		
 		setContentView(R.layout.activity_main);
-		ViewPager pager = (ViewPager) findViewById(R.id.pager);
+		pager = (ViewPager) findViewById(R.id.pager);
 		FragmentManager fm = getSupportFragmentManager();
 		FragmentPager pagerAdapter = new FragmentPager(fm);
 		
@@ -47,10 +40,20 @@ public class MainActivity extends FragmentActivity {
 		
 		pager.setAdapter(pagerAdapter);
 		pager.setCurrentItem(0);
-
-
 	}
-
+	
+	public void onPreviousButtonClicked(View v){
+		pager.setCurrentItem(pager.getCurrentItem()-1);
+	}	
+	
+	public void onNextButtonClicked(View v){
+		pager.setCurrentItem(pager.getCurrentItem()+1);
+	}
+	
+	public void onConfirmButtonClicked(View v){
+		
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
