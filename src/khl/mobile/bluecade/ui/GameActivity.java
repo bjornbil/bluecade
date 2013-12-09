@@ -13,7 +13,7 @@ public class GameActivity extends Activity {
 	private TextView titel;
 	private GameHandler handler;
 	private ImageView launch;
-	private int gameid;
+	private Integer gameid;
 	private String title;
 	
 	@Override
@@ -22,11 +22,10 @@ public class GameActivity extends Activity {
 		setContentView(R.layout.activity_game_main);
 		handler = new GameHandler();
 		launch = (ImageView) findViewById(R.id.launchTemplate);
-		Bundle extras = getIntent().getExtras();
-		  if (extras != null) {
-		   String id= extras.getString("id");
-		   if (id != null) {
-			   gameid = Integer.parseInt(id);
+		Bundle bundle = getIntent().getExtras();
+		  if (bundle != null) {
+		  {
+			   gameid = (Integer) bundle.get("id");
 			   title = handler.getGamesInfo().get(gameid).getTitle();
 		   }
 		}

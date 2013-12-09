@@ -64,9 +64,9 @@ public class MainActivity extends FragmentActivity {
 	public void checkCurrentItem(){
 		Bundle extras = getIntent().getExtras();
 		  if (extras != null) {
-		   String id= extras.getString("page");
+		   Integer id = extras.getInt("page");
 		   if (id != null) {
-		       pager.setCurrentItem(Integer.parseInt(id));
+		       pager.setCurrentItem(id);
 		   }
 		  }
 	}

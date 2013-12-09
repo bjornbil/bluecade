@@ -33,7 +33,7 @@ public class FragmentTemplate extends Fragment{
     		public void onClick(View arg0) {
     			Intent i=new Intent();
     			i.setClass(context,infoclass);
-    	        i.putExtra("id",Integer.toString(id));      
+    	        i.putExtra("id",id);      
     			startActivity(i);
     		}
     	});
@@ -43,7 +43,7 @@ public class FragmentTemplate extends Fragment{
     		public void onClick(View arg0) {
     			Intent i=new Intent();
     			i.setClass(context,gameclass);
-    	        i.putExtra("id",Integer.toString(id));      
+    	        i.putExtra("id",id);      
     			startActivity(i);
     		}
     	});
