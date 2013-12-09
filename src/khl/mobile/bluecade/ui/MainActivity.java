@@ -10,7 +10,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 public class MainActivity extends FragmentActivity {
 
@@ -19,6 +23,10 @@ public class MainActivity extends FragmentActivity {
 	
 	GameHandler gameHandler;
 	ViewPager pager;
+	ImageView previousButton;
+	ImageView nextButton;
+	ImageButton infobutton;
+	ImageButton gamebutton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,30 +36,65 @@ public class MainActivity extends FragmentActivity {
 		
 		setContentView(R.layout.activity_main);
 		pager = (ViewPager) findViewById(R.id.pager);
+		previousButton = (ImageView) findViewById(R.id.previousButton);
+		nextButton = (ImageView) findViewById(R.id.nextButton);		
+		pager.setOnPageChangeListener(new OnPageChangeListener() {
+			@Override public void onPageScrollStateChanged(int arg0) {}
+			@Override public void onPageScrolled(int arg0, float arg1, int arg2) {updateButtonVisibility();}
+			@Override public void onPageSelected(int arg0) {}});
+		
 		FragmentManager fm = getSupportFragmentManager();
 		FragmentPager pagerAdapter = new FragmentPager(fm);
 		
 		for(GameInfo i : gameHandler.getGamesInfo()){
 			FragmentTemplate f = new FragmentTemplate();
 			f.setTitle(i.getTitle());
+			f.setId(i.getId());
 			f.setImage(i.getImageResourceId());
+			f.setContext(MainActivity.this);
+			f.setInfoClass(InfoActivity.class);
+			f.setGameClass(GameActivity.class);
 			pagerAdapter.addItem(f);
-		}
-		
+		}		
 		pager.setAdapter(pagerAdapter);
 		pager.setCurrentItem(0);
+		checkCurrentItem();
 	}
 	
+	public void checkCurrentItem(){
+		Bundle extras = getIntent().getExtras();
+		  if (extras != null) {
+		   String id= extras.getString("page");
+		   if (id != null) {
+		       pager.setCurrentItem(Integer.parseInt(id));
+		   }
+		  }
+	}
 	public void onPreviousButtonClicked(View v){
 		pager.setCurrentItem(pager.getCurrentItem()-1);
+		updateButtonVisibility();
 	}	
 	
 	public void onNextButtonClicked(View v){
 		pager.setCurrentItem(pager.getCurrentItem()+1);
+		updateButtonVisibility();
 	}
 	
 	public void onConfirmButtonClicked(View v){
 		
+	}
+	
+	private void updateButtonVisibility(){
+		if(pager.getCurrentItem() >= pager.getAdapter().getCount()-1){
+			nextButton.setVisibility(View.INVISIBLE);
+		}else{
+			nextButton.setVisibility(View.VISIBLE);
+		}
+		if(pager.getCurrentItem() == 0){
+			previousButton.setVisibility(View.INVISIBLE);
+		}else{
+			previousButton.setVisibility(View.VISIBLE);
+		}
 	}
 	
 	@Override

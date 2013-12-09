@@ -23,11 +23,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="khl.mobile.bluecade.ui.PictionaryMainActivity"
+            android:name="khl.mobile.bluecade.ui.GameActivity"
             android:label="@string/app_name"> 
          </activity>
          <activity
-            android:name="khl.mobile.bluecade.ui.RPSMainActivity"
+            android:name="khl.mobile.bluecade.ui.InfoActivity"
             android:label="@string/app_name"> 
          </activity>
     </application>
