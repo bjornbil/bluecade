@@ -3,6 +3,8 @@ package khl.mobile.bluecade.ui;
 import khl.mobile.bluecade.R;
 import khl.mobile.bluecade.model.GameHandler;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -48,7 +50,14 @@ public class InfoActivity extends Activity implements OnClickListener{
 		Intent i = new Intent();
 		i.setClass(InfoActivity.this,MainActivity.class);
 		i.putExtra("page", gameid);
+        i.addCategory(Intent.CATEGORY_HOME); 
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 		startActivity(i);
+	}
+	
+	@Override
+	public void onBackPressed() {
+		goback.performClick();
 	}
 
 

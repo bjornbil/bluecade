@@ -3,6 +3,7 @@ package khl.mobile.bluecade.ui;
 import khl.mobile.bluecade.R;
 import khl.mobile.bluecade.model.GameHandler;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ImageView;
@@ -39,5 +40,15 @@ public class GameActivity extends Activity {
 		
 		getMenuInflater().inflate(R.menu.blue_cade, menu);
 		return true;
+	}
+	
+	@Override
+	public void onBackPressed() {
+		Intent i = new Intent();
+		i.setClass(GameActivity.this,MainActivity.class);
+		i.putExtra("page", gameid);
+        i.addCategory(Intent.CATEGORY_HOME); 
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+		startActivity(i);
 	}
 }

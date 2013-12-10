@@ -9,7 +9,7 @@ public class RpsInfo implements GameInfo {
 
 	@Override
 	public String getTitle() {
-		return "Rock, Paper, Scissors";
+		return "Rock,Paper,Scissors";
 	}
 
 	@Override

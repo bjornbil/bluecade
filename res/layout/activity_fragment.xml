@@ -2,52 +2,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/background_game_select"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".BlueCadeMainMenu" >
-    
-    <ImageButton
-        android:id="@+id/imageButton1"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_below="@+id/templateImage"
-        android:layout_centerHorizontal="true"
-        android:scaleType="fitCenter"
-        android:background="@drawable/background"
-        android:contentDescription="@string/info"
-        android:src="@drawable/info" ></ImageButton>
-
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignLeft="@+id/imageButton1"
-        android:layout_below="@+id/imageButton1"
-        android:background="@drawable/background"
-        android:scaleType="fitCenter"
-        android:contentDescription="@string/opengame"
-        android:src="@drawable/startgame" />
 
     <ImageView
         android:id="@+id/templateImage"
-        android:layout_width="250dp"
-        android:layout_height="200dp"
-        android:layout_alignParentTop="true"
+        android:layout_width="180dp"
+        android:layout_height="120dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="50dp"
         android:contentDescription="@string/rps" />
 
     <TextView
         android:id="@+id/templateText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp"
-        android:textSize="20sp"
+        android:layout_marginTop="5dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textAllCaps="true"
         android:textColor="#000000"
         />
 
