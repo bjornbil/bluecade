@@ -13,10 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Menu;
 import android.view.View;
-<<<<<<< HEAD
-=======
 import android.widget.ImageButton;
->>>>>>> origin/NEWBRANCH
 import android.widget.ImageView;
 
 public class MainActivity extends FragmentActivity {
@@ -28,11 +25,9 @@ public class MainActivity extends FragmentActivity {
 	ViewPager pager;
 	ImageView previousButton;
 	ImageView nextButton;
-<<<<<<< HEAD
-=======
+
 	ImageButton infobutton;
 	ImageButton gamebutton;
->>>>>>> origin/NEWBRANCH
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +38,9 @@ public class MainActivity extends FragmentActivity {
 		setContentView(R.layout.activity_main);
 		pager = (ViewPager) findViewById(R.id.pager);
 		previousButton = (ImageView) findViewById(R.id.previousButton);
-<<<<<<< HEAD
 		nextButton = (ImageView) findViewById(R.id.nextButton);
 		
-=======
 		nextButton = (ImageView) findViewById(R.id.nextButton);		
->>>>>>> origin/NEWBRANCH
 		pager.setOnPageChangeListener(new OnPageChangeListener() {
 			@Override public void onPageScrollStateChanged(int arg0) {}
 			@Override public void onPageScrolled(int arg0, float arg1, int arg2) {updateButtonVisibility();}
