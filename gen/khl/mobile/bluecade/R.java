@@ -70,10 +70,8 @@ public final class R {
         public static final int activity_game_info=0x7f030002;
         public static final int activity_game_main=0x7f030003;
         public static final int activity_main=0x7f030004;
-        public static final int activity_pic_info=0x7f030005;
-        public static final int activity_pic_main=0x7f030006;
-        public static final int activity_rps_info=0x7f030007;
-        public static final int activity_rps_main=0x7f030008;
+        public static final int activity_pic_main=0x7f030005;
+        public static final int activity_rps_main=0x7f030006;
     }
     public static final class menu {
         public static final int blue_cade=0x7f080000;
