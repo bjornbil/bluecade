@@ -5,6 +5,7 @@ import khl.mobile.bluecade.controller.FragmentPager;
 import khl.mobile.bluecade.model.GameHandler;
 import khl.mobile.bluecade.model.GameInfo;
 import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -80,7 +81,11 @@ public class MainActivity extends FragmentActivity {
     			startActivity(i);
     		}
     	});
-		
+		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();    
+		if (!mBluetoothAdapter.isEnabled()) {
+		        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+		        startActivity(enableBtIntent);
+		}
 	}
 	
 	public void checkCurrentItem(){
