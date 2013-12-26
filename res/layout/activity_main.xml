@@ -23,21 +23,21 @@
 	        android:id="@+id/previousButton"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:contentDescription="@string/backarrow"
-	        android:src="@drawable/back"
-	        android:scaleType="centerInside"
 	        android:layout_gravity="center"
-            android:layout_weight="0"
-            android:onClick="onPreviousButtonClicked" />
+	        android:contentDescription="@string/backarrow"
+	        android:onClick="onPreviousButtonClicked"
+	        android:scaleType="centerInside"
+	        android:src="@drawable/back" />
 	
 	    <android.support.v4.view.ViewPager
 	        xmlns:android="http://schemas.android.com/apk/res/android"
 	        android:id="@+id/pager"
-	        android:layout_height="400dp"
-	        android:layout_width="wrap_content"
-	        android:scaleType="centerInside"
-            android:layout_weight="1"
-                 >
+	        android:layout_width="224dp"
+	        android:layout_height="215dp"
+	        android:layout_gravity="center_vertical"
+	        android:padding="1dp"
+	        android:scaleType="centerInside" >
+
 	    </android.support.v4.view.ViewPager>
 	
 	    <ImageView
@@ -55,6 +55,27 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/imageButton1"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/background"
+            android:scaleType="fitCenter"
+            android:src="@drawable/info" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignLeft="@+id/imageButton1"
+            android:layout_centerVertical="true"
+            android:background="@drawable/background"
+            android:scaleType="fitCenter"
+            android:src="@drawable/startgame" />
     
     </RelativeLayout>
 </LinearLayout>

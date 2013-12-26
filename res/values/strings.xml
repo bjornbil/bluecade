@@ -17,6 +17,9 @@
     <string name="instructions">Instructions</string>
     <string name="highscores">Highscores</string>
     <string name="connected">Connected to :</string>
+    <string name="btonoff">Bluetooth connection</string>
+    <string name="refreshpairing">Search devices</string>
+    <string name="devices">Available decives</string>
     <string name="info">Info</string>
 
 </resources>

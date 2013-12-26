@@ -5,7 +5,9 @@ import khl.mobile.bluecade.controller.FragmentPager;
 import khl.mobile.bluecade.model.GameHandler;
 import khl.mobile.bluecade.model.GameInfo;
 import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -21,13 +23,13 @@ public class MainActivity extends FragmentActivity {
 	// TODO: make initialiseActivity (or alternative) that creates the game and
 	// bluetooth handlers so it can pass them to the next Activity
 	
-	GameHandler gameHandler;
-	ViewPager pager;
-	ImageView previousButton;
-	ImageView nextButton;
-
-	ImageButton infobutton;
-	ImageButton gamebutton;
+	private GameHandler gameHandler;
+	private ViewPager pager;
+	private ImageView previousButton;
+	private ImageView nextButton;
+	private ImageButton infobutton;
+	private ImageButton startgamebutton;
+	private int lastfragmentid;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +40,13 @@ public class MainActivity extends FragmentActivity {
 		setContentView(R.layout.activity_main);
 		pager = (ViewPager) findViewById(R.id.pager);
 		previousButton = (ImageView) findViewById(R.id.previousButton);
-		nextButton = (ImageView) findViewById(R.id.nextButton);
-		
 		nextButton = (ImageView) findViewById(R.id.nextButton);		
 		pager.setOnPageChangeListener(new OnPageChangeListener() {
 			@Override public void onPageScrollStateChanged(int arg0) {}
-			@Override public void onPageScrolled(int arg0, float arg1, int arg2) {updateButtonVisibility();}
+			@Override public void onPageScrolled(int arg0, float arg1, int arg2) {
+				updateButtonVisibility();
+				lastfragmentid = pager.getCurrentItem();
+				}
 			@Override public void onPageSelected(int arg0) {}});
 		
 		FragmentManager fm = getSupportFragmentManager();
@@ -54,33 +57,60 @@ public class MainActivity extends FragmentActivity {
 			f.setTitle(i.getTitle());
 			f.setId(i.getId());
 			f.setImage(i.getImageResourceId());
-			f.setContext(MainActivity.this);
-			f.setInfoClass(InfoActivity.class);
-			f.setGameClass(GameActivity.class);
 			pagerAdapter.addItem(f);
 		}		
 		pager.setAdapter(pagerAdapter);
-		pager.setCurrentItem(0);
 		checkCurrentItem();
+		infobutton = (ImageButton) findViewById(R.id.imageButton1);
+		infobutton.setOnClickListener(new View.OnClickListener(){
+    		@Override
+    		public void onClick(View arg0) {
+    			Intent i=new Intent();
+    			i.setClass(MainActivity.this,InfoActivity.class);
+    	        i.putExtra("id",lastfragmentid);      
+    			startActivity(i);
+    		}
+    	});
+		startgamebutton = (ImageButton) findViewById(R.id.imageButton2);
+		startgamebutton.setOnClickListener(new View.OnClickListener(){
+    		@Override
+    		public void onClick(View arg0) {
+    			Intent i=new Intent();
+    			i.setClass(MainActivity.this,GameActivity.class);
+    	        i.putExtra("id",lastfragmentid);  
+    			startActivity(i);
+    		}
+    	});
+		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();    
+		if (!mBluetoothAdapter.isEnabled()) {
+		        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+		        startActivity(enableBtIntent);
+		}
 	}
 	
 	public void checkCurrentItem(){
 		Bundle extras = getIntent().getExtras();
 		  if (extras != null) {
-		   String id= extras.getString("page");
+		   Integer id = extras.getInt("page");
 		   if (id != null) {
-		       pager.setCurrentItem(Integer.parseInt(id));
+		       pager.setCurrentItem(id);
+		       lastfragmentid = pager.getCurrentItem();
 		   }
+		  }
+		  else {
+			  pager.setCurrentItem(0);
 		  }
 	}
 	public void onPreviousButtonClicked(View v){
 		pager.setCurrentItem(pager.getCurrentItem()-1);
 		updateButtonVisibility();
+		lastfragmentid = pager.getCurrentItem();
 	}	
 	
 	public void onNextButtonClicked(View v){
 		pager.setCurrentItem(pager.getCurrentItem()+1);
 		updateButtonVisibility();
+		lastfragmentid = pager.getCurrentItem();
 	}
 	
 	public void onConfirmButtonClicked(View v){
@@ -118,7 +148,7 @@ public class MainActivity extends FragmentActivity {
 	    {
 	        @Override
 	        public void onClick(DialogInterface dialog, int which) {
-	            finish();    
+	            finish(); 
 	        }
 
 	    })
