@@ -81,11 +81,6 @@ public class MainActivity extends FragmentActivity {
     			startActivity(i);
     		}
     	});
-		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();    
-		if (!mBluetoothAdapter.isEnabled()) {
-		        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-		        startActivity(enableBtIntent);
-		}
 	}
 	
 	public void checkCurrentItem(){
