@@ -2,6 +2,7 @@ package khl.mobile.bluecade.model.games;
 
 import khl.mobile.bluecade.R;
 import khl.mobile.bluecade.model.GameInfo;
+import khl.mobile.bluecade.ui.games.PictionaryMainActivity;
 import android.app.Activity;
 
 public class PictionaryInfo implements GameInfo {
@@ -18,7 +19,7 @@ public class PictionaryInfo implements GameInfo {
 
 	@Override
 	public Activity createGame() {
-		return null;
+		return new PictionaryMainActivity();
 	}
 	
 	@Override

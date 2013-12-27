@@ -3,7 +3,7 @@ package khl.mobile.bluecade.model.games;
 import android.app.Activity;
 import khl.mobile.bluecade.R;
 import khl.mobile.bluecade.model.GameInfo;
-import khl.mobile.bluecade.model.games.rps.RpsActivity;
+import khl.mobile.bluecade.ui.games.RPSMainActivity;
 
 public class RpsInfo implements GameInfo {
 
@@ -19,7 +19,7 @@ public class RpsInfo implements GameInfo {
 	
 	@Override
 	public Activity createGame() {
-		return new RpsActivity();
+		return new RPSMainActivity();
 	}
 
 	@Override

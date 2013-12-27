@@ -1,16 +1,16 @@
-package khl.mobile.bluecade.ui;
+package khl.mobile.bluecade.ui.games;
 
 import khl.mobile.bluecade.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 
-public class PictionaryMainActivity extends Activity {
+public class RPSMainActivity extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_pic_main);
+		setContentView(R.layout.activity_rps_main);
 	
 	}
 
