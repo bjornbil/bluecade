@@ -16,16 +16,22 @@
 
     <ListView
         android:id="@+id/new_devices"
-        android:layout_width="fill_parent"
-        android:layout_height="425dp"
-        android:layout_weight="1.06"
-        android:background="@drawable/background"
-        android:stackFromBottom="true" />
+        android:layout_width="match_parent"
+        android:layout_height="402dp"
+        android:layout_weight="0.89" >
+    </ListView>
+
+    <Button
+        android:id="@+id/button_disc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/make_discoverable" />
 
     <Button
         android:id="@+id/button_scan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="@string/button_scan" />
 
 </LinearLayout>

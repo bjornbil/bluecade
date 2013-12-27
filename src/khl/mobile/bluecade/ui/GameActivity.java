@@ -1,11 +1,14 @@
 package khl.mobile.bluecade.ui;
 
+import java.io.IOException;
+
 import khl.mobile.bluecade.R;
 import khl.mobile.bluecade.model.GameHandler;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,11 +19,10 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 public class GameActivity extends Activity {
 	
-	private TextView titel;
+	private TextView titel, connected;
 	private GameHandler handler;
 	private ImageView launch;
 	private Integer gameid;
@@ -28,6 +30,7 @@ public class GameActivity extends Activity {
 	private Switch btonoff;
 	private ImageButton connect;
 	private BluetoothAdapter btadapter;
+	private String connectedto = "";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +43,15 @@ public class GameActivity extends Activity {
 		  {
 			   gameid = (Integer) bundle.get("id");
 			   title = handler.getGamesInfo().get(gameid).getTitle();
+			   if ((String) bundle.get("name") != null)
+			   connectedto = (String) bundle.get("name");
 		   }
 		}
 		launch.setImageResource(handler.getGamesInfo().get(gameid).getLaunchImageId());
 		titel = (TextView) findViewById(R.id.textView1);
 		titel.setText(title);
+		connected = (TextView) findViewById(R.id.textView2);
+		connected.setText(Html.fromHtml(connected.getText() + " " + connectedto));
 		btonoff = (Switch) findViewById(R.id.switch1);
 		btonoff.setTextOff("Off");
 		btonoff.setTextOn("On");
@@ -68,6 +75,7 @@ public class GameActivity extends Activity {
 		public void onClick(View view) {
 			if (btadapter.isEnabled()){
 			Intent i = new Intent(GameActivity.this,ConnectActivity.class);
+			i.putExtra("id",gameid);
 			startActivity(i);
 			}
 			else {
@@ -85,6 +93,7 @@ public class GameActivity extends Activity {
 		getMenuInflater().inflate(R.menu.blue_cade, menu);
 		return true;
 	}
+	
 	
 	@Override
 	public void onBackPressed() {
