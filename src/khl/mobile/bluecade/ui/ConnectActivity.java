@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import khl.mobile.bluecade.R;
+import khl.mobile.bluecade.model.bluetooth.BluetoothHandler;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -109,37 +110,23 @@ public class ConnectActivity extends Activity {
 		mBtAdapter.startDiscovery();
 	}
 
-	@SuppressWarnings("unused")
-	private void ensureDiscoverable() {
-		if (mBtAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
-			Intent discoverableIntent = new Intent(
-					BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-			discoverableIntent.putExtra(
-					BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-			startActivity(discoverableIntent);
-		}
-	}
-
 	private OnItemClickListener mDeviceClickListener = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> av, View v, int index, long arg3) {
 			mBtAdapter.cancelDiscovery();
 
-			String info = ((TextView) v).getText().toString();
-			String address = info.substring(info.length() - 17);
-			final String name = info.substring(0, info.length() - 18);
-			System.out.println(name);
-			System.out.println(name.length());
-			BluetoothDevice device = getDevice(name, address);
-			System.out.print(device.getName());
+			//String info = ((TextView) v).getText().toString();
+			//String address = info.substring(info.length() - 17);
+			//final String name = info.substring(0, info.length() - 18);
+
 			AsyncTask<Integer, Void, Void> connectTask = new AsyncTask<Integer, Void, Void>() {
 				@Override
 				protected Void doInBackground(Integer... params) {
 					try {
 						BluetoothDevice device = availabledevices
 								.get(params[0]);
-						socket = device
-								.createRfcommSocketToServiceRecord(YOUR_UUID);
+						socket = device.createInsecureRfcommSocketToServiceRecord(YOUR_UUID);
 						socket.connect();
+						BluetoothHandler.getInstance().setSocket(socket);
 					} catch (IOException e) {
 						Log.d("BLUETOOTH_CLIENT", e.getMessage());
 					}
@@ -150,24 +137,13 @@ public class ConnectActivity extends Activity {
 				protected void onPostExecute(Void result) {
 					Intent intent = new Intent(ConnectActivity.this, GameActivity.class);
 					intent.putExtra("id", gameid);
-					intent.putExtra("name", name);
 					startActivity(intent);
 				}
 			};
+			title.setText("Connecting...");
 			connectTask.execute(index);
-			
 		}
 	};
-
-	private BluetoothDevice getDevice(String name, String address) {
-		BluetoothDevice d = null;
-		for (BluetoothDevice b : availabledevices) {
-			if (b.getName().equals(name) && b.getAddress().equals(address)) {
-				d = b;
-			}
-		}
-		return d;
-	}
 
 	private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
 		@Override

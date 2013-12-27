@@ -1,14 +1,14 @@
 package khl.mobile.bluecade.ui;
 
-import java.io.IOException;
-
 import khl.mobile.bluecade.R;
 import khl.mobile.bluecade.model.GameHandler;
+import khl.mobile.bluecade.model.bluetooth.BluetoothHandler;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,10 +43,12 @@ public class GameActivity extends Activity {
 		  {
 			   gameid = (Integer) bundle.get("id");
 			   title = handler.getGamesInfo().get(gameid).getTitle();
-			   if ((String) bundle.get("name") != null)
-			   connectedto = (String) bundle.get("name");
 		   }
 		}
+		if (BluetoothHandler.getInstance().getDevice() != null){
+		   connectedto = BluetoothHandler.getInstance().getDevice().getName();
+		Log.v("Bluecade", BluetoothHandler.getInstance().getDevice().toString());}
+		   
 		launch.setImageResource(handler.getGamesInfo().get(gameid).getLaunchImageId());
 		titel = (TextView) findViewById(R.id.textView1);
 		titel.setText(title);
