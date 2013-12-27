@@ -45,9 +45,8 @@ public class GameActivity extends Activity {
 			   title = handler.getGamesInfo().get(gameid).getTitle();
 		   }
 		}
-		if (BluetoothHandler.getInstance().getDevice() != null){
+		if (BluetoothHandler.getInstance().getDevice() != null)
 		   connectedto = BluetoothHandler.getInstance().getDevice().getName();
-		Log.v("Bluecade", BluetoothHandler.getInstance().getDevice().toString());}
 		   
 		launch.setImageResource(handler.getGamesInfo().get(gameid).getLaunchImageId());
 		titel = (TextView) findViewById(R.id.textView1);
