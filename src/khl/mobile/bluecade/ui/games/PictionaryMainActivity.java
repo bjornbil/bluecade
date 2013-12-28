@@ -5,17 +5,27 @@ import java.util.Observer;
 
 import khl.mobile.bluecade.R;
 import khl.mobile.bluecade.model.bluetooth.BluetoothHandler;
+import khl.mobile.bluecade.ui.games.pictionary.DrawingPanel;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.TextView;
 
 public class PictionaryMainActivity extends Activity implements Observer{
 	
+	private DrawingPanel drawingPanel;
+	private TextView status;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pic_main);
 		BluetoothHandler.getInstance().addObserver(this);
+		drawingPanel = (DrawingPanel) findViewById(R.id.drawingPanel);
+		status = (TextView) findViewById(R.id.status);
+		
+		//TODO: 
+		drawingPanel.setBehavior(DrawingPanel.BEHAVIOR_LOCAL);
 	}
 
 	@Override
