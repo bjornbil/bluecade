@@ -70,6 +70,17 @@ public class PictionaryMainActivity extends Activity implements Observer, Motion
 		getMenuInflater().inflate(R.menu.blue_cade, menu);
 		return true;
 	}
+	
+	public void switchRoles(){
+		if(role){
+			drawingPanel.setBehavior(DrawingPanel.Behavior.SENDER);
+			drawingPanel.removeMotionEventListener(this);
+		}else{
+			drawingPanel.setBehavior(DrawingPanel.Behavior.RECIEVER);
+			drawingPanel.addMotionEventListener(this);
+		}
+		role = !role;
+	}
 
 	@Override
 	public void update(Observable obs, Object arg) {
