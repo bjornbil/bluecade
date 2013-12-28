@@ -1,6 +1,6 @@
 package khl.mobile.bluecade.model.bluetooth.packages;
 
-public class PictionaryPacket extends Packet{
+public class PictionaryGuessPacket extends Packet{
 
 	/**
 	 * 
