@@ -29,7 +29,7 @@ public class GameActivity extends Activity {
 	private ImageView launch;
 	private Integer gameid;
 	private String title;
-	private Switch btonoff;
+	//private Switch btonoff;
 	private ImageButton connect, startgame;
 	private BluetoothAdapter btadapter;
 	private String connectedto = "";
@@ -55,10 +55,13 @@ public class GameActivity extends Activity {
 		titel.setText(title);
 		connected = (TextView) findViewById(R.id.textView2);
 		connected.setText(Html.fromHtml(connected.getText() + " " + connectedto));
+		btadapter = BluetoothAdapter.getDefaultAdapter();
+		
+		/*
 		btonoff = (Switch) findViewById(R.id.switch1);
 		btonoff.setTextOff("Off");
 		btonoff.setTextOn("On");
-		btadapter = BluetoothAdapter.getDefaultAdapter();
+		
 		if (btadapter.isEnabled()){
 			btonoff.toggle();
 		}
@@ -72,7 +75,7 @@ public class GameActivity extends Activity {
 					btadapter.enable();
 				}
    			}
-			});
+			});*/
 		connect = (ImageButton) findViewById(R.id.imageButton1);
 		connect.setOnClickListener(new OnClickListener(){
 		public void onClick(View view) {
@@ -88,6 +91,7 @@ public class GameActivity extends Activity {
 			}
 		}
 		});
+		
 		startgame = (ImageButton) findViewById(R.id.launchTemplate);
 		startgame.setOnClickListener(new OnClickListener(){
 			public void onClick(View view) {
