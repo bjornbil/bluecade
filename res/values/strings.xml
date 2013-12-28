@@ -26,6 +26,8 @@
     <string name="none_found">No devices found</string>
     <string name="connect">Connect a device</string>
     <string name="make_discoverable">Make discoverable</string>
+    <string name="title_paired_devices">Paired devices</string>
+    <string name="none_paired">No devices paired</string>
     <string name="title_connected_to">connected: </string>
     <string name="title_connecting">connecting...</string>
     <string name="title_not_connected">not connected</string>

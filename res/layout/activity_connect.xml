@@ -1,8 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/background"
+    android:background="#000000"
     android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/title_paired_devices"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#666"
+        android:paddingLeft="5dp"
+        android:text="@string/title_paired_devices"
+        android:textColor="#fff"
+        android:visibility="gone" />
+
+    <ListView
+        android:id="@+id/paired_devices"
+        android:layout_width="fill_parent"
+        android:layout_height="180dp"
+        android:layout_marginTop="0dp"
+        android:layout_weight="52.21"
+        android:stackFromBottom="true" />
 
     <TextView
         android:id="@+id/title_new_devices"
@@ -17,21 +36,21 @@
     <ListView
         android:id="@+id/new_devices"
         android:layout_width="match_parent"
-        android:layout_height="402dp"
-        android:layout_weight="0.89" >
+        android:layout_height="119dp"
+        android:layout_weight="14.83" >
+
     </ListView>
 
     <Button
         android:id="@+id/button_disc"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="32dp"
         android:text="@string/make_discoverable" />
 
     <Button
         android:id="@+id/button_scan"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="32dp"
         android:text="@string/button_scan" />
 
 </LinearLayout>
