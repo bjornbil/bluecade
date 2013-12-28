@@ -3,6 +3,8 @@ package khl.mobile.bluecade.ui;
 import khl.mobile.bluecade.R;
 import khl.mobile.bluecade.model.GameHandler;
 import khl.mobile.bluecade.model.bluetooth.BluetoothHandler;
+import khl.mobile.bluecade.ui.games.PictionaryMainActivity;
+import khl.mobile.bluecade.ui.games.RPSMainActivity;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
@@ -28,7 +30,7 @@ public class GameActivity extends Activity {
 	private Integer gameid;
 	private String title;
 	private Switch btonoff;
-	private ImageButton connect;
+	private ImageButton connect, startgame;
 	private BluetoothAdapter btadapter;
 	private String connectedto = "";
 	
@@ -86,6 +88,36 @@ public class GameActivity extends Activity {
 			}
 		}
 		});
+		startgame = (ImageButton) findViewById(R.id.launchTemplate);
+		startgame.setOnClickListener(new OnClickListener(){
+			public void onClick(View view) {
+				if (btadapter.isEnabled()){
+					if (BluetoothHandler.getInstance().getDevice() != null){
+					if (gameid == 0){
+						Intent i = new Intent(GameActivity.this,RPSMainActivity.class);
+						i.putExtra("id",gameid);
+						startActivity(i);
+					}
+					else if (gameid == 1){
+						Intent i = new Intent(GameActivity.this,PictionaryMainActivity.class);
+						i.putExtra("id",gameid);
+						startActivity(i);
+					}
+					}
+					else {
+						Toast.makeText(getApplicationContext(),
+								"Please make sure you have an opponent connected",
+								Toast.LENGTH_LONG).show();
+					}
+				}
+				else {
+				Toast.makeText(getApplicationContext(),
+					"Please make sure your bluetooth connection is turned on",
+					Toast.LENGTH_LONG).show();
+				}
+			}
+			});
+		
 	}
 
 	@Override

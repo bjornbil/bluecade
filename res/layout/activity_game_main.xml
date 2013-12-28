@@ -54,10 +54,11 @@
         android:scaleType="fitCenter"
         android:src="@drawable/connect" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/launchTemplate"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:background="@drawable/background"
         android:layout_marginTop="20dp"
         android:scaleType="fitCenter" />
 

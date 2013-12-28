@@ -19,10 +19,14 @@ public class RPSMainActivity extends Activity implements Observer {
 	private Move myMove;
 	private Move oppMove;
 	private TextView status;
+	private int gameid;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// in case of adding a goback button
+	/*	Bundle b = getIntent().getExtras();
+		gameid = b.getInt("id"); */
 		setContentView(R.layout.activity_rps_main);
 		BluetoothHandler.getInstance().addObserver(this);
 		status = (TextView) findViewById(R.id.status);

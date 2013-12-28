@@ -49,6 +49,9 @@ public class ConnectActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Intent disc;
+		disc = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+		startActivityForResult(disc, DISCOVERY_REQUEST);
 		Bundle bundle = getIntent().getExtras();
 		gameid = bundle.getInt("id");
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -62,14 +65,7 @@ public class ConnectActivity extends Activity {
 				v.setVisibility(View.GONE);
 			}
 		});
-		discoverButton = (Button) findViewById(R.id.button_disc);
-		discoverButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				Intent disc;
-				disc = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-				startActivityForResult(disc, DISCOVERY_REQUEST);
-			}
-		});
+
 
 		devicesArrayAdapter = new ArrayAdapter<String>(this,R.layout.device_name);
 		pairedDevicesArrayAdapter = new ArrayAdapter<String>(this,R.layout.device_name);
