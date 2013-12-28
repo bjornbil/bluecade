@@ -26,11 +26,9 @@ public class DrawingPanel extends View implements MotionEventListener{
 	// the multiplayer handler as a listener
 	//Reciever behavior ignores local touches, don't forget to register this
 	// DrawingPanel as a listener of the multiplayer handler
-	public static final int BEHAVIOR_LOCAL = 0;
-	public static final int BEHAVIOR_SENDER = 1;
-	public static final int BEHAVIOR_RECIEVER = 2;
+	public enum Behavior {DISABLED, LOCAL, SENDER, RECIEVER};
 	
-	private int behavior = BEHAVIOR_LOCAL;
+	private Behavior behavior = DrawingPanel.Behavior.DISABLED;
 	private List<MotionEventListener> listeners = new ArrayList<MotionEventListener>();
 	
 	//Because the drawing panel might be a different size on the screen of your opponent
@@ -48,12 +46,12 @@ public class DrawingPanel extends View implements MotionEventListener{
 		drawPaint.setStrokeCap(Paint.Cap.ROUND);
 	}
 	
-	public DrawingPanel(Context context, AttributeSet attrs, int behavior) {
+	public DrawingPanel(Context context, AttributeSet attrs, Behavior behavior) {
 		this(context, attrs);
 		setBehavior(behavior);
 	}
 	
-	public void setBehavior(int behavior){
+	public void setBehavior(Behavior behavior){
 		this.behavior = behavior;
 	}
 
@@ -73,12 +71,12 @@ public class DrawingPanel extends View implements MotionEventListener{
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent e) {
-		if(this.behavior == this.BEHAVIOR_RECIEVER) return false;
+		if(this.behavior.equals(DrawingPanel.Behavior.DISABLED) || this.behavior.equals(DrawingPanel.Behavior.RECIEVER)) return false;
 		boolean changed = (e.getAction() == MotionEvent.ACTION_DOWN ||
 				e.getAction() == MotionEvent.ACTION_MOVE ||
 				e.getAction() == MotionEvent.ACTION_UP);
 		if(changed){
-			if(this.behavior == this.BEHAVIOR_SENDER){
+			if(this.behavior.equals(DrawingPanel.Behavior.SENDER) ){
 				for(MotionEventListener l : this.listeners){
 					l.update(e);
 				}
@@ -114,6 +112,7 @@ public class DrawingPanel extends View implements MotionEventListener{
 
 	@Override
 	public void update(MotionEvent e) {
+		if(this.behavior.equals(DrawingPanel.Behavior.DISABLED)) return;
 		switch(e.getAction()){
 		case MotionEvent.ACTION_DOWN:
 			drawPath.moveTo(e.getX(), e.getY());
@@ -127,5 +126,21 @@ public class DrawingPanel extends View implements MotionEventListener{
 			break;
 		}
 		invalidate();
+	}
+
+	public double getHorizontalScale() {
+		return hScale;
+	}
+
+	public void setHorizontalScale(double hScale) {
+		this.hScale = hScale;
+	}
+
+	public double getVerticalScale() {
+		return vScale;
+	}
+
+	public void setVerticalScale(double vScale) {
+		this.vScale = vScale;
 	}
 }
