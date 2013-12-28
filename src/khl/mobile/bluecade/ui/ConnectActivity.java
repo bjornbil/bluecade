@@ -6,7 +6,9 @@ import java.util.Set;
 import java.util.UUID;
 
 import khl.mobile.bluecade.R;
+import khl.mobile.bluecade.model.bluetooth.AcceptThread;
 import khl.mobile.bluecade.model.bluetooth.BluetoothHandler;
+import khl.mobile.bluecade.model.bluetooth.ConnectThread;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -18,6 +20,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -134,7 +137,7 @@ public class ConnectActivity extends Activity {
 	private OnItemClickListener mDeviceClickListener = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> av, View v, int index, long arg3) {
 			mBtAdapter.cancelDiscovery();
-
+			
 			// String info = ((TextView) v).getText().toString();
 			// String address = info.substring(info.length() - 17);
 			// final String name = info.substring(0, info.length() - 18);
@@ -142,16 +145,13 @@ public class ConnectActivity extends Activity {
 			AsyncTask<Integer, Void, Void> connectTask = new AsyncTask<Integer, Void, Void>() {
 				@Override
 				protected Void doInBackground(Integer... params) {
-					try {
 						BluetoothDevice device = availabledevices
 								.get(params[0]);
-						socket = device.createInsecureRfcommSocketToServiceRecord(YOUR_UUID);
-						socket.connect();
+						ConnectThread t = new ConnectThread(device);
+						t.run();
+						socket = t.getSocket();
 						BluetoothHandler.getInstance().setSocket(socket);
-					} catch (IOException e) {
-						Log.d("BLUETOOTH_CLIENT", e.getMessage());
-					}
-					return null;
+						return null;
 				}
 
 				@Override
@@ -207,31 +207,29 @@ public class ConnectActivity extends Activity {
 			boolean isDiscoverable = resultCode > 0;
 			if (isDiscoverable) {
 				String name = "bluecadeserver";
-				try {
-					final BluetoothServerSocket btserver = mBtAdapter
-							.listenUsingRfcommWithServiceRecord(name, YOUR_UUID);
-					AsyncTask<Integer, Void, BluetoothSocket> acceptThread = new AsyncTask<Integer, Void, BluetoothSocket>() {
-						@Override
-						protected BluetoothSocket doInBackground(
-								Integer... params) {
-							try {
-								socket = btserver.accept(params[0] * 1000);
-								return socket;
-							} catch (IOException e) {
-								Log.d("BLUETOOTH", e.getMessage());
-							}
-							return null;
+				AsyncTask<Integer, Void, BluetoothSocket> acceptThread = new AsyncTask<Integer, Void, BluetoothSocket>() {
+					@Override
+					protected BluetoothSocket doInBackground(
+							Integer... params) {
+						try {
+							AcceptThread t = new AcceptThread();
+							t.run();
+							socket = t.getServerSocket().accept(params[0] * 1000);
+							return socket;
+						} catch (IOException e) {
+							Log.d("BLUETOOTH", e.getMessage());
 						}
+						return null;
+					}
 
-						@Override
-						protected void onPostExecute(BluetoothSocket result) {
-
-						}
-					};
-					acceptThread.execute(resultCode);
-				} catch (IOException e) {
-					Log.d("BLUETOOTH", e.getMessage());
-				}
+					@Override
+					protected void onPostExecute(BluetoothSocket result) {
+						Intent i = new Intent(ConnectActivity.this,GameActivity.class);
+						i.putExtra("id",gameid);
+						startActivity(i);
+					}
+				};
+				acceptThread.execute(resultCode);
 			}
 		}
 	}
