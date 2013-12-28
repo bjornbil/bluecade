@@ -212,7 +212,7 @@ public class ConnectActivity extends Activity {
 					protected BluetoothSocket doInBackground(
 							Integer... params) {
 						try {
-							AcceptThread t = new AcceptThread();
+							AcceptThread t = new AcceptThread(); 
 							t.run();
 							socket = t.getServerSocket().accept(params[0] * 1000);
 							return socket;
