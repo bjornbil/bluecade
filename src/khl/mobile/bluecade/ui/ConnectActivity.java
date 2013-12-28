@@ -49,9 +49,6 @@ public class ConnectActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Intent disc;
-		disc = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-		startActivityForResult(disc, DISCOVERY_REQUEST);
 		Bundle bundle = getIntent().getExtras();
 		gameid = bundle.getInt("id");
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -65,6 +62,15 @@ public class ConnectActivity extends Activity {
 				v.setVisibility(View.GONE);
 			}
 		});
+		discoverButton = (Button) findViewById(R.id.button_disc);
+		discoverButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				Intent disc;
+				disc = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+				startActivityForResult(disc, DISCOVERY_REQUEST);
+			}
+		});
+		
 
 
 		devicesArrayAdapter = new ArrayAdapter<String>(this,R.layout.device_name);
@@ -77,13 +83,13 @@ public class ConnectActivity extends Activity {
 		paireddevices = (ListView) findViewById(R.id.paired_devices);
 		paireddevices.setAdapter(pairedDevicesArrayAdapter);
 		paireddevices.setOnItemClickListener(mDeviceClickListener);
-		
+		mBtAdapter = BluetoothAdapter.getDefaultAdapter();
 		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
 		this.registerReceiver(mReceiver, filter);
 
 		filter = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 		this.registerReceiver(mReceiver, filter);
-		mBtAdapter = BluetoothAdapter.getDefaultAdapter();
+		
 		 // Get a set of currently paired devices
         Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
         System.out.println(pairedDevices.size());
