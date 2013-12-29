@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
@@ -10,48 +9,55 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:text="@string/rps"
-        android:layout_centerHorizontal="true"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/white"
         android:textSize="30sp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" >
+    <ImageButton
+        android:id="@+id/paper"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/rock"
+        android:background="@drawable/background"
+        android:onClick="paperClicked"
+        android:scaleType="fitCenter"
+        android:src="@drawable/paperimage" />
 
-        <Button
-            android:id="@+id/rock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="rockClicked"
-            android:text="Rock" />
-
-        <Button
-            android:id="@+id/paper"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="paperClicked"
-            android:text="Paper" />
-
-        <Button
-            android:id="@+id/scissors"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="scissorsClicked"
-            android:text="Scissors" />
-
-    </LinearLayout>
+    <ImageButton
+        android:id="@+id/rock"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignTop="@+id/scissors"
+        android:background="@drawable/background"
+        android:onClick="rockClicked"
+        android:scaleType="fitCenter"
+        android:src="@drawable/rockimage" />
 
     <TextView
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Pick a move"
+        android:layout_marginTop="148dp"
+        android:text="@string/move"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ImageButton
+        android:id="@+id/scissors"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_alignBottom="@+id/paper"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="21dp"
+        android:background="@drawable/background"
+        android:onClick="scissorsClicked"
+        android:scaleType="fitCenter"
+        android:src="@drawable/scissorsimage" />
 
 </RelativeLayout>
