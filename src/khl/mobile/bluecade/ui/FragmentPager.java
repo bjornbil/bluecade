@@ -1,4 +1,4 @@
-package khl.mobile.bluecade.controller;
+package khl.mobile.bluecade.ui;
 
 import java.util.ArrayList;
 import java.util.List;
