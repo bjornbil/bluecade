@@ -26,7 +26,6 @@ public class GameActivity extends Activity {
 	
 	private TextView titel, connected;
 	private GameHandler handler;
-	private ImageView launch;
 	private Integer gameid;
 	private String title;
 	//private Switch btonoff;
@@ -39,7 +38,6 @@ public class GameActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game_main);
 		handler = new GameHandler();
-		launch = (ImageView) findViewById(R.id.launchTemplate);
 		Bundle bundle = getIntent().getExtras();
 		  if (bundle != null) {
 		  {
@@ -50,7 +48,7 @@ public class GameActivity extends Activity {
 		if (BluetoothHandler.getInstance().getDevice() != null)
 		   connectedto = BluetoothHandler.getInstance().getDevice().getName();
 		   
-		launch.setImageResource(handler.getGamesInfo().get(gameid).getLaunchImageId());
+		
 		titel = (TextView) findViewById(R.id.textView1);
 		titel.setText(title);
 		connected = (TextView) findViewById(R.id.textView2);
@@ -93,6 +91,7 @@ public class GameActivity extends Activity {
 		});
 		
 		startgame = (ImageButton) findViewById(R.id.launchTemplate);
+		startgame.setImageResource(handler.getGamesInfo().get(gameid).getLaunchImageId());
 		startgame.setOnClickListener(new OnClickListener(){
 			public void onClick(View view) {
 				if (btadapter.isEnabled()){

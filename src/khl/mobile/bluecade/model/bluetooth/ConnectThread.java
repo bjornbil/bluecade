@@ -42,7 +42,6 @@ public class ConnectThread implements Runnable {
             mmSocket.connect();
         } catch (IOException connectException) {
             // Unable to connect; close the socket and get out
-        	System.out.println("Kan niet connecten");
             try {
                 mmSocket.close();
             } catch (IOException closeException) { }
