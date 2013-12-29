@@ -22,6 +22,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -37,11 +38,12 @@ import android.widget.Toast;
 
 public class ConnectActivity extends Activity {
 	protected static final UUID YOUR_UUID = UUID
-			.fromString("04c6093b-0000-1000-8000-00805f9b34fb");
+			.fromString("00001101-0000-1000-8000-00805F9B34FB");
 	private static int DISCOVERY_REQUEST = 1;
 	public static String EXTRA_DEVICE_ADDRESS = "device_address";
 	private BluetoothAdapter mBtAdapter;
 	private BluetoothSocket socket;
+	private BluetoothDevice mDevice;
 	private ArrayAdapter<String> devicesArrayAdapter, pairedDevicesArrayAdapter;
 	private Button scanButton, discoverButton;
 	private TextView title;
@@ -93,10 +95,10 @@ public class ConnectActivity extends Activity {
 		filter = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 		this.registerReceiver(mReceiver, filter);
 		
+		registerReceiver(mReceiver, new IntentFilter(BluetoothDevice.ACTION_ACL_CONNECTED));
 		 // Get a set of currently paired devices
         Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
-        System.out.println(pairedDevices.size());
-
+        toastMaster(pairedDevices.size() + " paired devices");
         // If there are paired devices, add each one to the ArrayAdapter
         if (pairedDevices.size() > 0) {
             findViewById(R.id.title_paired_devices).setVisibility(View.VISIBLE);
@@ -110,6 +112,14 @@ public class ConnectActivity extends Activity {
 
 		
 	}
+	
+	public void toastMaster(String textToDisplay){
+		 Toast myMessage = Toast.makeText(getApplicationContext(), 
+		 textToDisplay,
+		 Toast.LENGTH_LONG);
+		 myMessage.setGravity(Gravity.CENTER, 0, 0);
+		 myMessage.show();
+		}
 
 	@Override
 	protected void onDestroy() {
@@ -147,13 +157,17 @@ public class ConnectActivity extends Activity {
 				protected Void doInBackground(Integer... params) {
 						BluetoothDevice device = availabledevices
 								.get(params[0]);
+						mDevice = device;
 						ConnectThread t = new ConnectThread(device);
-						t.run();
-						socket = t.getSocket();
-						BluetoothHandler.getInstance().setSocket(socket);
+						try {
+							new Thread(t).start();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						
 						return null;
 				}
-
+				
 				@Override
 				protected void onPostExecute(Void result) {
 					Intent intent = new Intent(ConnectActivity.this, GameActivity.class);
@@ -188,13 +202,15 @@ public class ConnectActivity extends Activity {
 					.equals(action)) {
 				setProgressBarIndeterminateVisibility(false);
 				if (devicesArrayAdapter.getCount() == 0) {
-					Toast.makeText(getApplicationContext(), "No devices found",
-							Toast.LENGTH_LONG).show();
+					toastMaster("No devices found");
 					title.setText("Available devices");
 					scanButton.setVisibility(View.VISIBLE);
 					findViewById(R.id.title_new_devices).setVisibility(
 							View.GONE);
 				}
+			}
+			else if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)){
+				toastMaster("Connected!");
 			}
 
 		}
@@ -203,7 +219,8 @@ public class ConnectActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == DISCOVERY_REQUEST) {
+		
+	if (requestCode == DISCOVERY_REQUEST) {
 			boolean isDiscoverable = resultCode > 0;
 			if (isDiscoverable) {
 				String name = "bluecadeserver";
@@ -213,7 +230,6 @@ public class ConnectActivity extends Activity {
 							Integer... params) {
 						try {
 							AcceptThread t = new AcceptThread(); 
-							t.run();
 							socket = t.getServerSocket().accept(params[0] * 1000);
 							return socket;
 						} catch (IOException e) {
@@ -224,6 +240,7 @@ public class ConnectActivity extends Activity {
 
 					@Override
 					protected void onPostExecute(BluetoothSocket result) {
+						BluetoothHandler.getInstance().setSocket(result);
 						Intent i = new Intent(ConnectActivity.this,GameActivity.class);
 						i.putExtra("id",gameid);
 						startActivity(i);
@@ -233,5 +250,6 @@ public class ConnectActivity extends Activity {
 			}
 		}
 	}
+	
 
 }

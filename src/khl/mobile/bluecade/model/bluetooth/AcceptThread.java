@@ -7,11 +7,11 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 
-public class AcceptThread extends Thread {
+public class AcceptThread implements Runnable {
     private final BluetoothServerSocket mmServerSocket;
     private BluetoothAdapter mBluetoothAdapter;
     private static final String NAME = "Server";
-    private static final UUID YOUR_UUID = UUID.fromString("04c6093b-0000-1000-8000-00805f9b34fb");
+    private static final UUID YOUR_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
  
     public AcceptThread() {
         // Use a temporary object that is later assigned to mmServerSocket,
@@ -20,11 +20,11 @@ public class AcceptThread extends Thread {
         BluetoothServerSocket tmp = null;
         try {
             // MY_UUID is the app's UUID string, also used by the client code
-            tmp = mBluetoothAdapter.listenUsingRfcommWithServiceRecord(NAME, YOUR_UUID);
+            tmp = mBluetoothAdapter.listenUsingInsecureRfcommWithServiceRecord(NAME, YOUR_UUID);
         } catch (IOException e) { }
         mmServerSocket = tmp;
     }
- 
+    @Override
     public void run() {
         BluetoothSocket socket = null;
         // Keep listening until exception occurs or a socket is returned
