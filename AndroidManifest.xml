@@ -7,8 +7,10 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="18" />
-	<uses-permission android:name="android.permission.BLUETOOTH"/>
-	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -16,7 +18,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="khl.mobile.bluecade.ui.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,25 +28,29 @@
         </activity>
         <activity
             android:name="khl.mobile.bluecade.ui.GameActivity"
-            android:label="@string/app_name"> 
-         </activity>
-         <activity
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="khl.mobile.bluecade.ui.InfoActivity"
-            android:label="@string/app_name"> 
-         </activity>
-           <activity
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="khl.mobile.bluecade.ui.ConnectActivity"
-            android:label="@string/app_name"> 
-         </activity>
-         <activity
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="khl.mobile.bluecade.ui.games.PictionaryMainActivity"
-            android:label="@string/app_name"> 
-         </activity>
-         <activity
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="khl.mobile.bluecade.ui.games.RPSMainActivity"
-            android:label="@string/app_name"> 
-         </activity>
-
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
-        
+
 </manifest>
