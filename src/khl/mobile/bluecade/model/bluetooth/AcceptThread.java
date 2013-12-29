@@ -3,59 +3,102 @@ package khl.mobile.bluecade.model.bluetooth;
 import java.io.IOException;
 import java.util.UUID;
 
+import khl.mobile.bluecade.ui.ConnectActivity;
+
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
+import android.util.Log;
 
 public class AcceptThread implements Runnable {
-    private final BluetoothServerSocket mmServerSocket;
+    private BluetoothServerSocket mmServerSocket;
+    private BluetoothSocket btConnectedSocket;
     private BluetoothAdapter mBluetoothAdapter;
     private static final String NAME = "Server";
-    private static final UUID YOUR_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+	private static final String TAG = null;
+	private static final String ACTION = "Bluetooth socket is connected";
+	private ConnectActivity parent;
+	private boolean connected;
  
-    public AcceptThread() {
+    public AcceptThread(ConnectActivity parent) {
         // Use a temporary object that is later assigned to mmServerSocket,
         // because mmServerSocket is final
-    	mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        BluetoothServerSocket tmp = null;
-        try {
-            // MY_UUID is the app's UUID string, also used by the client code
-            tmp = mBluetoothAdapter.listenUsingInsecureRfcommWithServiceRecord(NAME, YOUR_UUID);
-        } catch (IOException e) { }
-        mmServerSocket = tmp;
-    }
-    @Override
-    public void run() {
-        BluetoothSocket socket = null;
-        // Keep listening until exception occurs or a socket is returned
-        while (true) {
-            try {
-                socket = mmServerSocket.accept();
-            } catch (IOException e) {
-                break;
-            }
-            // If a connection was accepted
-            if (socket != null) {
-                // Do work to manage the connection (in a separate thread)
-                //manageConnectedSocket(socket);
-                try {
-					mmServerSocket.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-                break;
-            }
-        }
+    	this.parent = parent;
+    	connected = false;
+   
     }
     
-    public BluetoothServerSocket getServerSocket(){
+    public BluetoothServerSocket getSocket(){
     	return mmServerSocket;
     }
- 
-    /** Will cancel the listening socket, and cause the thread to finish */
-    public void cancel() {
+    
+    @Override
+    public void run() {
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        try {
+            Log.i(TAG, "getting socket from adapter");
+            mmServerSocket = mBluetoothAdapter.listenUsingRfcommWithServiceRecord(NAME, ConnectActivity.YOUR_UUID);
+            listen();
+
+        }
+        catch (IOException ex) {
+            Log.e(TAG, "error while initializing");
+        }
+    }
+
+    private void listen() {
+        Log.i(TAG, "listening");
+        btConnectedSocket = null;
+        while (!connected) {
+            try {
+                btConnectedSocket = mmServerSocket.accept();
+            }
+            catch (IOException ex) {
+                Log.e(TAG,"connection failed");
+                connectionFailed();
+            }
+
+            if (btConnectedSocket != null) {
+                broadcast();
+                closeServerSocket();
+            }
+            else {
+                Log.i(TAG,  "socket is null");
+                connectionFailed();
+            }
+        }
+
+    }
+
+    private void broadcast() {
+        try {
+            Log.i(TAG, "connected? "+btConnectedSocket.isConnected());
+            Intent intent = new Intent();
+            intent.setAction(ACTION);
+            intent.putExtra("state", btConnectedSocket.isConnected());
+            parent.sendBroadcast(intent); 
+            connected = true;
+        }
+        catch (RuntimeException runTimeEx) {
+
+        }
+
+        closeServerSocket();
+    }
+
+
+    private void connectionFailed () {
+
+    }
+
+    public void closeServerSocket() {
         try {
             mmServerSocket.close();
-        } catch (IOException e) { }
+        }
+        catch (IOException ex) {
+            Log.e(TAG+":cancel", "error while closing server socket");
+        }
     }
 }

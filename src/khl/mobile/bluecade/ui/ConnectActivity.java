@@ -12,7 +12,6 @@ import khl.mobile.bluecade.model.bluetooth.ConnectThread;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -20,7 +19,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -37,7 +35,7 @@ import android.widget.Toast;
 // Example used from http://luugiathuy.com/2011/02/android-java-bluetooth/
 
 public class ConnectActivity extends Activity {
-	protected static final UUID YOUR_UUID = UUID
+	public static final UUID YOUR_UUID = UUID
 			.fromString("00001101-0000-1000-8000-00805F9B34FB");
 	private static int DISCOVERY_REQUEST = 1;
 	public static String EXTRA_DEVICE_ADDRESS = "device_address";
@@ -104,6 +102,7 @@ public class ConnectActivity extends Activity {
             findViewById(R.id.title_paired_devices).setVisibility(View.VISIBLE);
             for (BluetoothDevice device : pairedDevices) {
                 pairedDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+                availabledevices.add(device);
             }
         } else {
             String noDevices = getResources().getText(R.string.none_paired).toString();
@@ -147,16 +146,26 @@ public class ConnectActivity extends Activity {
 	private OnItemClickListener mDeviceClickListener = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> av, View v, int index, long arg3) {
 			mBtAdapter.cancelDiscovery();
-			
 			// String info = ((TextView) v).getText().toString();
 			// String address = info.substring(info.length() - 17);
 			// final String name = info.substring(0, info.length() - 18);
-
+			
+			// this extraindex is added for the second listview so that indexes are set right
+			// for the new discovered devices
+			final int extraindex;
+			if (R.id.new_devices == av.getId()){
+				extraindex = pairedDevicesArrayAdapter.getCount();
+			}
+			else {
+				extraindex = 0;
+			}
+			// start connectTask code
 			AsyncTask<Integer, Void, Void> connectTask = new AsyncTask<Integer, Void, Void>() {
 				@Override
 				protected Void doInBackground(Integer... params) {
 						BluetoothDevice device = availabledevices
-								.get(params[0]);
+							.get(params[0]+extraindex);
+
 						mDevice = device;
 						ConnectThread t = new ConnectThread(device);
 						try {
@@ -195,6 +204,7 @@ public class ConnectActivity extends Activity {
 					availabledevices.add(device);
 					devicesArrayAdapter.add(device.getName() + "\n"
 							+ device.getAddress());
+					toastMaster("added " + device.getName() + " normal");
 				}
 				scanButton.setVisibility(View.VISIBLE);
 
@@ -211,6 +221,10 @@ public class ConnectActivity extends Activity {
 			}
 			else if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)){
 				toastMaster("Connected!");
+				Intent i = new Intent(ConnectActivity.this, GameActivity.class);
+				intent.putExtra("id", gameid);
+				startActivity(i);
+				
 			}
 
 		}
@@ -223,14 +237,13 @@ public class ConnectActivity extends Activity {
 	if (requestCode == DISCOVERY_REQUEST) {
 			boolean isDiscoverable = resultCode > 0;
 			if (isDiscoverable) {
-				String name = "bluecadeserver";
 				AsyncTask<Integer, Void, BluetoothSocket> acceptThread = new AsyncTask<Integer, Void, BluetoothSocket>() {
 					@Override
 					protected BluetoothSocket doInBackground(
 							Integer... params) {
 						try {
-							AcceptThread t = new AcceptThread(); 
-							socket = t.getServerSocket().accept(params[0] * 1000);
+							AcceptThread t = new AcceptThread(ConnectActivity.this); 
+							socket = t.getSocket().accept(params[0] * 1000);
 							return socket;
 						} catch (IOException e) {
 							Log.d("BLUETOOTH", e.getMessage());
