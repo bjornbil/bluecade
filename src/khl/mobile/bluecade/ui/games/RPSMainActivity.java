@@ -106,7 +106,7 @@ public class RPSMainActivity extends Activity implements Observer {
 			myMove = null;
 		} else if (oppMove == null) {
 			// waiting for opponents move
-			b.append("Waiting for your opponents move.\n");
+			b.append("Waiting for your opponent's move.\n");
 
 		} else if (myMove == null) {
 			// waiting for your move
