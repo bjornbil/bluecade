@@ -105,8 +105,8 @@ public class ConnectActivity extends Activity {
                 availabledevices.add(device);
             }
         } else {
-            String noDevices = getResources().getText(R.string.none_paired).toString();
-            pairedDevicesArrayAdapter.add(noDevices);
+            title.setText("No paired devices found");
+            findViewById(R.id.title_paired_devices).setVisibility(View.VISIBLE);
         }
 
 		
