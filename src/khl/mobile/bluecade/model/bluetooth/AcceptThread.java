@@ -20,10 +20,12 @@ public class AcceptThread implements Runnable {
 	private static final String ACTION = "Bluetooth socket is connected";
 	private ConnectActivity parent;
 	private boolean connected;
+	private int gameid;
  
     public AcceptThread(ConnectActivity parent) {
         // Use a temporary object that is later assigned to mmServerSocket,
         // because mmServerSocket is final
+    	gameid = parent.getGameId();
     	this.parent = parent;
     	connected = false;
    
@@ -78,6 +80,7 @@ public class AcceptThread implements Runnable {
             Intent intent = new Intent();
             intent.setAction(ACTION);
             intent.putExtra("state", btConnectedSocket.isConnected());
+            intent.putExtra("id",gameid);
             parent.sendBroadcast(intent); 
             connected = true;
         }

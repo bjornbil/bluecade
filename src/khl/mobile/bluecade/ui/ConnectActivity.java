@@ -112,6 +112,10 @@ public class ConnectActivity extends Activity {
 		
 	}
 	
+	public int getGameId(){
+		return gameid;
+	}
+	
 	public void toastMaster(String textToDisplay){
 		 Toast myMessage = Toast.makeText(getApplicationContext(), 
 		 textToDisplay,
