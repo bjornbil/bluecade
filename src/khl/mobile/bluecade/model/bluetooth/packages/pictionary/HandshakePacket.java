@@ -1,8 +1,10 @@
-package khl.mobile.bluecade.model.bluetooth.packages;
+package khl.mobile.bluecade.model.bluetooth.packages.pictionary;
 
 import java.util.Random;
 
-public class PictionaryHandshakePacket extends Packet{
+import khl.mobile.bluecade.model.bluetooth.packages.Packet;
+
+public class HandshakePacket extends Packet{
 
 	/**
 	 * 
@@ -14,7 +16,7 @@ public class PictionaryHandshakePacket extends Packet{
 	private int panelHeight;
 	private int panelWidth;
 	
-	public PictionaryHandshakePacket(int panelWidth, int panelHeight){
+	public HandshakePacket(int panelWidth, int panelHeight){
 		diceRoll = new Random().nextInt();
 		this.panelHeight = panelHeight;
 		this.panelWidth = panelWidth;

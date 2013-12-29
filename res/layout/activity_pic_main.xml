@@ -24,6 +24,26 @@
             android:text="You are drawing a\n Something"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
+            <EditText
+            android:id="@+id/guessText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+        
+        <Button
+            android:id="@+id/guessButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:onClick="makeGuess"
+            android:text="Guess" />
+
     </LinearLayout>
 
 </LinearLayout>
