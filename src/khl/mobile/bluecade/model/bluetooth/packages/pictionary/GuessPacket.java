@@ -8,5 +8,11 @@ public class GuessPacket extends Packet{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	public String guess;
+	
+	public GuessPacket(String guess){
+		this.guess = guess;
+	}
 
 }
